@@ -14,7 +14,7 @@ Mobile-first padel court booking demo built for pitch video and ad b-roll.
 - Court booking schedule with court filters, USD revenue, and check-in states
 - Follow-up clients with call/message actions
 - Smart reminders for check-ins, court starts, and payments
-- Loyalty program with e-punch cards, rewards, and 10-pass progress
+- Dedicated loyalty customers and cards section with member progress, rewards due, and e-punch card templates
 - Club pulse panel with revenue, occupancy, and top time slot
 - Growth tools for campaigns, reminders, punch cards, and rewards
 

@@ -39,6 +39,20 @@ type Client = {
   loyalty: number
 }
 
+type LoyaltyCustomer = {
+  name: string
+  tier: string
+  progress: number
+  reward: string
+}
+
+type LoyaltyCardTemplate = {
+  title: string
+  detail: string
+  status: string
+  progress: number
+}
+
 const bookings: Booking[] = [
   {
     start: '09:00',
@@ -79,6 +93,17 @@ const clients: Client[] = [
   { name: "Liam O'Connor", lastPlayed: 'Played 2 weeks ago', action: 'message', loyalty: 6 },
   { name: 'Sofia Rossi', lastPlayed: 'Played 1 month ago', action: 'call', loyalty: 9 },
   { name: 'Noah Andersson', lastPlayed: 'Played 1 month ago', action: 'message', loyalty: 5 },
+]
+
+const loyaltyCustomers: LoyaltyCustomer[] = [
+  { name: 'Sofia Rossi', tier: 'Gold', progress: 9, reward: 'Free court hour next' },
+  { name: 'Emma Garcia', tier: 'Silver', progress: 8, reward: '$12 pro-shop credit' },
+  { name: "Liam O'Connor", tier: 'Rising', progress: 6, reward: 'VIP ladder invite' },
+]
+
+const loyaltyCards: LoyaltyCardTemplate[] = [
+  { title: '10x Open Play Pass', detail: '34 active cards', status: '8 near reward', progress: 82 },
+  { title: 'VIP Ladder Card', detail: '18 members enrolled', status: '2 rewards due', progress: 64 },
 ]
 
 const reminders = [
@@ -346,26 +371,74 @@ function RemindersCard() {
   )
 }
 
-function LoyaltyCard() {
+function LoyaltyProgramSection() {
   return (
-    <section className="panel compact-panel">
-      <SectionHeader title="Loyalty Program" />
-      <div className="punch-card">
-        <div>
-          <strong>E-Punch Card: 10x Open Play Pass</strong>
-          <span>8 / 10 punches</span>
-        </div>
-        <div className="punch-row" aria-label="8 of 10 loyalty punches used">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <span className={index < 8 ? 'punched' : ''} key={index} />
-          ))}
-        </div>
-        <strong className="remaining">2 left</strong>
+    <section className="panel loyalty-program-section" data-testid="loyalty-program-section">
+      <SectionHeader title="Loyalty Customers & Cards" action="Manage" />
+
+      <div className="loyalty-summary" aria-label="Loyalty program summary">
+        <span>
+          <strong>52</strong>
+          active customers
+        </span>
+        <span>
+          <strong>11</strong>
+          rewards due
+        </span>
+        <span>
+          <strong>$640</strong>
+          pass value
+        </span>
       </div>
-      <button className="panel-link" type="button">
-        View loyalty program
-        <ChevronRight size={19} />
-      </button>
+
+      <div className="loyalty-program-grid">
+        <div className="loyalty-block">
+          <div className="loyalty-subhead">
+            <Star size={18} />
+            <strong>Top loyal customers</strong>
+          </div>
+          <div className="loyalty-customer-list">
+            {loyaltyCustomers.map((customer) => (
+              <article className="loyalty-customer-row" key={customer.name}>
+                <span className="customer-avatar">{customer.name.slice(0, 1)}</span>
+                <span className="customer-loyalty-main">
+                  <span>
+                    <strong>{customer.name}</strong>
+                    <small>
+                      {customer.tier} member - {customer.progress}/10 punches
+                    </small>
+                  </span>
+                  <span className="loyalty-progress" aria-label={`${customer.progress} of 10 punches`}>
+                    <span style={{ width: `${customer.progress * 10}%` }} />
+                  </span>
+                </span>
+                <small className="reward-note">{customer.reward}</small>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="loyalty-block">
+          <div className="loyalty-subhead">
+            <WalletCards size={18} />
+            <strong>E-punch cards</strong>
+          </div>
+          <div className="loyalty-card-list">
+            {loyaltyCards.map((card) => (
+              <article className="loyalty-card-template" key={card.title}>
+                <div>
+                  <strong>{card.title}</strong>
+                  <small>{card.detail}</small>
+                </div>
+                <span className="card-status">{card.status}</span>
+                <span className="card-progress" aria-label={`${card.progress}% active`}>
+                  <span style={{ width: `${card.progress}%` }} />
+                </span>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
@@ -422,10 +495,10 @@ function Dashboard({
   return (
     <main className="content">
       <ScheduleCard selectedCourt={selectedCourt} onCourtChange={onCourtChange} onNewBooking={onNewBooking} />
+      <LoyaltyProgramSection />
       <div className="dashboard-grid">
         <FollowUpCard onClientsClick={onClientsClick} />
         <RemindersCard />
-        <LoyaltyCard />
         <ClubPulseCard />
       </div>
     </main>
@@ -527,7 +600,7 @@ function ClientsView() {
 
 function MoreView() {
   const moreItems = [
-    { icon: Star, title: 'Loyalty program', detail: 'E-punch cards, rewards, VIP passes' },
+    { icon: Star, title: 'Loyalty customers & cards', detail: 'Members, e-punch cards, rewards due' },
     { icon: WalletCards, title: 'Punch card studio', detail: 'Create open play and VIP bundles' },
     { icon: Bell, title: 'Reminder automation', detail: 'Check-ins, payments, follow-ups' },
     { icon: HeartPulse, title: 'Club health', detail: 'Occupancy, retention, revenue' },
