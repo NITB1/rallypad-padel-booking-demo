@@ -591,8 +591,8 @@
   text-align: left;
 }
 
-.reminder-row svg:last-child,
-.more-row svg:last-child {
+.reminder-row > svg:last-child,
+.more-row > svg:last-child {
   margin-left: auto;
 }
 
@@ -877,6 +877,10 @@
   border-radius: 14px;
   color: var(--deep);
   background: var(--lime);
+}
+
+.more-icon svg {
+  margin: 0;
 }
 
 .bottom-nav {
