@@ -88,7 +88,7 @@ const reminders = [
 ]
 
 const stats = [
-  { label: "Today's Revenue", value: '€1,240', detail: '+18% vs yesterday', icon: TrendingUp },
+  { label: "Today's Revenue", value: '$1,240', detail: '+18% vs yesterday', icon: TrendingUp },
   { label: 'Bookings', value: '28', detail: '6 remaining', icon: CalendarDays },
   { label: 'Players', value: '96', detail: 'Checked in', icon: UsersRound },
   { label: 'Occupancy', value: '74%', detail: 'Court time today', icon: Activity },
@@ -349,10 +349,10 @@ function RemindersCard() {
 function LoyaltyCard() {
   return (
     <section className="panel compact-panel">
-      <SectionHeader title="Loyalty Punch Cards" />
+      <SectionHeader title="Loyalty Program" />
       <div className="punch-card">
         <div>
-          <strong>10x Open Play Pass</strong>
+          <strong>E-Punch Card: 10x Open Play Pass</strong>
           <span>8 / 10 punches</span>
         </div>
         <div className="punch-row" aria-label="8 of 10 loyalty punches used">
@@ -363,7 +363,7 @@ function LoyaltyCard() {
         <strong className="remaining">2 left</strong>
       </div>
       <button className="panel-link" type="button">
-        View all cards
+        View loyalty program
         <ChevronRight size={19} />
       </button>
     </section>
@@ -377,7 +377,7 @@ function ClubPulseCard() {
       <div className="pulse-grid">
         <div>
           <span className="muted-label">Revenue</span>
-          <strong className="large-number">€8,740</strong>
+          <strong className="large-number">$8,740</strong>
           <span className="positive-detail">+22% vs last week</span>
         </div>
         <svg className="sparkline" viewBox="0 0 180 92" role="img" aria-label="Weekly revenue trend">
@@ -467,7 +467,7 @@ function BookingsView({ onNewBooking }: { onNewBooking: () => void }) {
             next start
           </span>
           <span>
-            <strong>€180</strong>
+            <strong>$180</strong>
             unpaid
           </span>
         </div>
@@ -527,9 +527,9 @@ function ClientsView() {
 
 function MoreView() {
   const moreItems = [
-    { icon: WalletCards, title: 'Punch card studio', detail: 'Open play passes and VIP bundles' },
+    { icon: Star, title: 'Loyalty program', detail: 'E-punch cards, rewards, VIP passes' },
+    { icon: WalletCards, title: 'Punch card studio', detail: 'Create open play and VIP bundles' },
     { icon: Bell, title: 'Reminder automation', detail: 'Check-ins, payments, follow-ups' },
-    { icon: Star, title: 'Loyalty rewards', detail: 'Milestones, referrals, club perks' },
     { icon: HeartPulse, title: 'Club health', detail: 'Occupancy, retention, revenue' },
   ]
 
